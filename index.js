@@ -75,13 +75,13 @@ function getGenreFacet(data) {
     console.log(languageId);
 
     if (facetId === "Genre") {
-      var selectedFacet = facet;
+      var selectedFacet = facet.value;
       //console.log(selectedFacet);
       console.log(languageId);
       genreCount.push([
         languageId,
         {
-          facet: selectedFacet
+          counts: selectedFacet
         }
       ]);
 
