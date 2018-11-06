@@ -1,5 +1,7 @@
 // console.log("testtesttest");
 const OBA = require("oba-api");
+var fs = require("file-system");
+
 require("dotenv").config();
 
 // Setup authentication to api server
@@ -16,9 +18,17 @@ const client = new OBA({
 
 // Client returns a promise which resolves the APIs output in JSON
 
-var rctx;
-var selectedValues = [];
-var selectedFacetId = [];
+var selectedFacet = [];
+var selectedFacetId = ["language(dut)", "language(eng)", "language(fre)"];
+// 00 = nederlands , 01 = engels, 02 = frans
+var selectedRctx = [
+  "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1SiktYWRkls6ML0pNLi5ILSoACrIaGTAx3DvJtO8gIxAxfdnByqhxaBIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
+  "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1Ss1LZ2Rkls6ML0pNLi5ILSoACrIaGTAxTDjBdO0AIxAxXdvOyqhxZyIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
+  "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1SitKZWRkls6ML0pNLi5ILSoACrIaGTAxPDvJdOggIxAx@dnByqhxbBIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
+  "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1Sk8tYmRkls6ML0pNLi5ILSoACrIaGTAxLDrFdO8gIxAxbdrJyqjxYBIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA=="
+];
+
+var genreCount = [];
 
 client
   .get(
@@ -33,72 +43,57 @@ client
   )
   .then(response => JSON.parse(response).aquabrowser)
   .then(response => {
-    // neem rctx
-    var rctx = response.meta.rctx;
-    return rctx;
-  })
-
-  .then(rctx => {
-    // kijk in de rctx naar het totaal aantal boeken per Genre
-    client
-      .get("refine", {
-        rctx: rctx,
-        count: 100
-      })
-      .then(rctx => JSON.parse(rctx).aquabrowser)
-      .then(rctx => {
-        var allFacets = rctx.facets.facet;
-        var languageFacet = getLanguageFacet(allFacets);
-        return selectedFacetId;
-      })
-
-      .then(rctx => {
-        var selectedFacetIds = [
-          "language(ger)",
-          "language(eng)",
-          "language(fre)"
-        ]; // vervangen met automatisch gegenereerde Array
-        selectedFacetIds.forEach(function(selectedFacetIds) {
-          client
-            .get("search", {
-              q: "format:book",
-              facet: selectedFacetIds,
-              refine: true
-            })
-            .then(res => JSON.parse(res).aquabrowser)
-            .then(res => {
-              console.log("RCTX per taal");
-              console.log(res.meta.rctx);
-            });
+    console.log(response);
+    // console.log(selectedRctx);
+    selectedRctx.forEach(function(selectedRctx) {
+      client
+        .get("refine", {
+          rctx: selectedRctx,
+          count: 100
+        })
+        .then(response => JSON.parse(response).aquabrowser)
+        .then(response => {
+          var genreFacet = getGenreFacet(response);
+          //console.log(getGenreFacet(response));
+          //return genreFacet;
         });
-      });
+    });
   })
-  .catch(err => console.log(err)); // Something went wrong in the request to the API
 
+  .catch(err => console.log(err)); // Something went wrong in the request to the API
 //!!!!! FUNCTIONS
 
-function getLanguageFacet(facetData) {
-  // facetData.forEach(function(facetData) {
-  //   var facetKey = facetData.id;
-  //
-  //   if (facetKey === "Language") {
-  //     var allLanguages = facetData.value;
-  //     allLanguages.forEach(function(allLanguages) {
-  //       var count = parseInt(allLanguages.count);
-  //       var id = allLanguages.id;
-  //       var facetId = "language(" + id + ")";
-  //
-  //       if (count > 20000) {
-  //         // als aantal groter is dan ... sla data op in:
-  //         selectedValues.push({
-  //           languageId: id,
-  //           languageCount: count
-  //         });
-  //         selectedFacetId.push({
-  //           facetId
-  //         });
-  //       }
-  //     });
-  //   }
-  // });
+function getGenreFacet(data) {
+  var languageId = data.meta["original-query"];
+  var facet = data.facets.facet;
+  //console.log(test);
+  var test = [languageId, { facet }];
+  console.log(test);
+
+  facet.forEach(function(facet) {
+    var facetId = facet.id;
+    console.log(languageId);
+
+    if (facetId === "Genre") {
+      var selectedFacet = facet;
+      //console.log(selectedFacet);
+      console.log(languageId);
+      genreCount.push([
+        languageId,
+        {
+          facet: selectedFacet
+        }
+      ]);
+
+      if (genreCount.length > 3) {
+        let data = JSON.stringify(genreCount);
+        //console.log(data);
+        fs.writeFile("data.json", data, err => {
+          if (err) throw err;
+          console.log("All data written to file");
+        });
+      }
+    }
+    //return selectedFacet;
+  });
 }
