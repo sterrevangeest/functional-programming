@@ -19,13 +19,16 @@ const client = new OBA({
 // Client returns a promise which resolves the APIs output in JSON
 
 var selectedFacet = [];
-var selectedFacetId = ["language(dut)", "language(eng)", "language(fre)"];
-// 00 = nederlands , 01 = engels, 02 = frans
+//var selectedFacetId = ["language(dut)", "language(eng)", "language(fre)"];
+// 00 = nederlands , 01 = engels, 02 = frans, 03 = duits, 04 = spaans, 05 = ara/arabisch, 06 = turks
 var selectedRctx = [
   "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1SiktYWRkls6ML0pNLi5ILSoACrIaGTAx3DvJtO8gIxAxfdnByqhxaBIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
   "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1Ss1LZ2Rkls6ML0pNLi5ILSoACrIaGTAxTDjBdO0AIxAxXdvOyqhxZyIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
   "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1SitKZWRkls6ML0pNLi5ILSoACrIaGTAxPDvJdOggIxAx@dnByqhxbBIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
-  "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1Sk8tYmRkls6ML0pNLi5ILSoACrIaGTAxLDrFdO8gIxAxbdrJyqjxYBIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA=="
+  "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1Sk8tYmRkls6ML0pNLi5ILSoACrIaGTAxLDrFdO8gIxAxbdrJyqjxYBIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
+  "AQ3IMQ7CIBQA0P9LGmI8gXFyc8Oik0tXdw9goCVAikB@JTGe0CM0poexb3wIbAscGpLm0r3Nx40xTI2zw1m7XifJEDZP5SMy2AUVbVHWXKesENneP8h0UzaU16zlqYKF5nZuq$WLePzd2Q2AJ60A4CAopZcIfiy$F$vxQgHqGPAP",
+  "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1SixKZGRkls6ML0pNLi5ILSoACrIaGTAxrCtucWhxYDp3kpFRY1IIswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
+  "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1KiktYmRkls6ML0pNLi5ILSoACrIaGTAx3Cme5jDNgWndKUZGjSUhzB4MDOz5SYkMDAyK$kX5$SX6OZmFpZkp$kAx9tKiHAbWvBxGAA=="
 ];
 
 var genreCount = [];
@@ -85,7 +88,7 @@ function getGenreFacet(data) {
         }
       ]);
 
-      if (genreCount.length > 3) {
+      if (genreCount.length > 6) {
         let data = JSON.stringify(genreCount);
         //console.log(data);
         fs.writeFile("data.json", data, err => {
