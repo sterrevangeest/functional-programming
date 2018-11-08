@@ -1,51 +1,24 @@
 # Functional Programming
 
-OBA API: [Aquabrowser API version 1](https://zoeken.oba.nl/api/v1/#/schema)
+## Onderzoek
 
-## Vragen bij de dataset
+Aan de hand van de data uit de [API](https://zoeken.oba.nl/api/v1/) van de [OBA](https://www.oba.nl) heb ik vragen opgesteld.
 
-### Hoofdvraag
+### Vragen
 
-Wat is de invloed van internationalisering op de boekencollectie van de OBA?
+Ik had graag willen onderzoeken wat de invloed van de komst van internationale studenten (in Amsterdam) is op de collectie van de OBA. Voor deze data had ik in ieder geval de volgende keys nodig uit de API: `target-audience`, `language`, `genre` en `import-time`.
 
-### Deelvragen
+Probleem met deze vraag:
 
-1.  Wat is de invloed van internationalisering **in het onderwijs** op de collectie?
-    • Heeft de komst van **internationale studenten** invloed op de collectie van de OBA?
-    • Zijn er in de loop van de tijd meer internationale studenten naar **Amsterdam** gekomen?
+- er is **niet één genre met alle educatieve boeken**. Het is teveel werk om uit te zoeken welke boeken in het genre onderwijs zouden kunnen vallen.
+- de **import-time van de artikelen niet erg betrouwbaar**. Van bijna elk artikel is de import-time: 2017-07-17.
 
-#### Welke variabele heb ik nodig:
+#### Uiteindelijke onderzoeksvraag
 
-#target-audience #language #genre #import-time
+Daarom heb ik mijn onderzoeksvraag verandert naar: Wat is de verhouding van de genres per taal?
+Voor deze vraag heb ik de volgende keys nodig: `language`, `format-type`, `genre.`
 
-Alle boeken
-Alle boeken in **Onderwijs**
-Alle niet **Nederlandstalige** boeken in **Onderwijs**
-
-Probleem met deze vraag: er is **niet één genre met alle educatieve boeken**. Het is teveel werk om uit te zoeken welke boeken in het genre onderwijs zouden kunnen vallen.
-Daarnaast is de **import-time van de artikelen niet erg betrouwbaar**. Van bijna elk artikel is de import-time: 2017-07-17.
-
-Daarom is de onderzoeksvraag wat versimpelt naar:
-Nieuwe richting in het onderzoek:
-
-Wat is de verhouding per genre:
-• Of het aantal buitenlandstalige boeken in bepaalde genre’s hoog is
-• In welke genre’s is het aantal buitenlandstalige boeken hoog?
-
-Welke variabele heb ik nodig:
-#language #genre #format
-
-## Keys die ik nodig heb:
-
-`format` bijv. `book` `cd` `ebook`
-
-`languages` bijv. `dut` `eng` `ger` `fre`
-
-`genres` bijv. `avonturenroman` `bijbels-verhaal` `biografie` ⚠️ er zijn ook artikelen zonder genre, of met meer dan 1 genre (worden weergeven in een object)
-
-facet=type(book)
-
-## Endpoints
+## Data ophalen
 
 ## Facets
 
@@ -69,6 +42,8 @@ Opzoeken met behulp van een link:
 `count=100` parameter count staat op 100, en laat dus max. 100 resultaten zien
 
 ## Externe bronnen
+
+De volgende bronnen zou ik in de toekomst kunnen gebruiken:
 
 Internationalisering op economisch gebied: [Nederland in Europese top economische internationalisering](https://www.cbs.nl/nl-nl/achtergrond/2014/38/nederland-in-europese-top-economische-internationalisering)
 
