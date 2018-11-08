@@ -1,5 +1,7 @@
 # Functional Programming
 
+## To-Do
+
 ## Onderzoek
 
 Aan de hand van de data uit de [API](https://zoeken.oba.nl/api/v1/) van de [OBA](https://www.oba.nl) heb ik vragen opgesteld.
@@ -10,17 +12,66 @@ Ik had graag willen onderzoeken wat de invloed van de komst van internationale s
 
 Probleem met deze vraag:
 
-- er is **niet één genre met alle educatieve boeken**. Het is teveel werk om uit te zoeken welke boeken in het genre onderwijs zouden kunnen vallen.
-- de **import-time van de artikelen niet erg betrouwbaar**. Van bijna elk artikel is de import-time: 2017-07-17.
+- er is niet één `genre` met alle educatieve boeken. Het is teveel werk om uit te zoeken welke boeken in het genre onderwijs zouden kunnen vallen.
+- de `import-time` van de artikelen niet erg betrouwbaar. Van bijna elk artikel is de import-time: `2017-07-17`.
 
 #### Uiteindelijke onderzoeksvraag
 
 Daarom heb ik mijn onderzoeksvraag verandert naar: Wat is de verhouding van de genres per taal?
 Voor deze vraag heb ik de volgende keys nodig: `language`, `format-type`, `genre.`
 
+Deelvragen:
+
+- Van welke talen heeft de OBA boeken? Van welke taal zijn de meeste boeken?
+- Wat zijn de grootste genres binnen een taal?
+- Is er een verschil in de verdeling tussen de genres van buitenlandstalige boeken?
+- Is er een verschil in de verdeling tussen de genres voor buitenlandstalige boeken en Nederlandstalige boeken?
+
+#### Hypotheses
+
+Ik verwacht vooral dat er een verschil zal zijn in de genres tussen Nederlandstalige en buitenlandstalige boeken. Ik verwacht bijvoorbeeld dat bepaalde genres als `islamitisch-milieu`, `streek-boeren-verhaal` en `homofiel-thema` niet in alle talen even populair zullen zijn. En dat bepaalde genres zelfs in bepaalde talen niet eens voorkomen in de OBA.
+
 ## Data ophalen
 
-## Facets
+Vanuit het [node-oba-api](https://github.com/rijkvanzanten/node-oba-api) pakketje van Rijk ben ik begonnen met het ophalen van data.
+
+Om van een taal alle boeken per genre op te halen schreef ik twee `.get` requests op de endpoints `search` en `refine`.
+
+Via `search` worden alle artikelen opgehaald die het `format:book` hebben, alle **boeken** dus.
+
+```
+client
+  .get(
+    // vraag alle boeken op
+    "search",
+    {
+      q: "format:book",
+      librarian: true,
+      refine: true
+    },
+    "title"
+  )
+```
+
+Via `refine` wordt de facet informatie over alles vanuit **boeken** van een bepaalde taal opgehaald. Dit request geeft in o.a. het genre facet de aantallen per genre aan voor de verschillende talen.
+
+```
+selectedRctx.forEach(function(selectedRctx) {
+  client
+    .get("refine", {
+      rctx: selectedRctx,
+      count: 100
+    })
+    .then(response => JSON.parse(response).aquabrowser)
+    .then(response => {
+      var genreFacet = getGenreFacet(response);
+    });
+});
+```
+
+Tijdens het ophalen van de data vond het lastig om in te schatten hoe ik de data het beste in kon delen. Hier heb ik dan ook veel tijd aan besteed voordat ik aan D3 begon. Terwijl toen ik in D3 begon, ik ontdekte dat ik mijn data liever nog weer anders had willen structureren.
+
+### Facets
 
 Opzoeken met behulp van een link:
 
