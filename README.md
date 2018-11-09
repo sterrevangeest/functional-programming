@@ -1,6 +1,6 @@
 # Functional Programming
 
-## To-Do
+Voor het vak Functional Programming haalde ik data op uit een API om een datavisualisatie te maken in D3.
 
 ## Onderzoek
 
@@ -41,7 +41,6 @@ Via het endpoint `search` worden alle artikelen opgehaald die het `format:book` 
 
 ```javascript
 client.get(
-  // vraag alle boeken op
   "search",
   {
     q: "format:book",
@@ -106,7 +105,7 @@ De volgende bronnen zal ik kunnen gebruiken als ik verder onderzoek wil doen naa
 - Innovatie en internationalisering, omdat “innovatieve bedrijven
   zijn doorgaans vaker internationaal georiënteerd”: [Innovatie en internationalisering](https://www.cbs.nl/nl-nl/achtergrond/2018/13/innovatie-en-internationalisering)
 
-### Dank voor:
+## Dank voor:
 
 - De [Cheatsheet](https://github.com/DanielvandeVelde/functional-programming#cheatsheet) van Daniel.
 - Het [node-oba-api](https://github.com/rijkvanzanten/node-oba-api) pakketje van Rijk.
