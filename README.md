@@ -95,18 +95,18 @@ Hoe mijn datavisualisatie er nu uit ziet is nog lang niet wat ik had willen bere
 
 Omdat de data van deze voorbeelden op een hele andere manier is ingedeeld vond ik het niet makkelijk om met mijn eigen data een Stacked Bar Chart te maken.
 
-### Dank voor:
-
-De [Cheatsheet](https://github.com/DanielvandeVelde/functional-programming#cheatsheet) van Daniel.
-Het [node-oba-api](https://github.com/rijkvanzanten/node-oba-api) pakketje van Rijk.
+Omdat mijn datavisualisatie nog niet klaar is kan ik ook nog geen antwoord geven op mijn onderzoeksvragen.
 
 ## Extra bronnen
 
 De volgende bronnen zal ik kunnen gebruiken als ik verder onderzoek wil doen naar dit onderwerp:
 
-Internationalisering op economisch gebied: [Nederland in Europese top economische internationalisering](https://www.cbs.nl/nl-nl/achtergrond/2014/38/nederland-in-europese-top-economische-internationalisering)
+- Internationalisering op economisch gebied: [Nederland in Europese top economische internationalisering](https://www.cbs.nl/nl-nl/achtergrond/2014/38/nederland-in-europese-top-economische-internationalisering)
+- De meerwaarde van internationalisering in het onderwijs: [De meerwaarde van internationalisering | Nieuwsbericht | Rijksoverheid.nl](https://www.rijksoverheid.nl/actueel/nieuws/2018/06/04/de-meerwaarde-van-internationalisering)
+- Innovatie en internationalisering, omdat “innovatieve bedrijven
+  zijn doorgaans vaker internationaal georiënteerd”: [Innovatie en internationalisering](https://www.cbs.nl/nl-nl/achtergrond/2018/13/innovatie-en-internationalisering)
 
-De meerwaarde van internationalisering in het onderwijs: [De meerwaarde van internationalisering | Nieuwsbericht | Rijksoverheid.nl](https://www.rijksoverheid.nl/actueel/nieuws/2018/06/04/de-meerwaarde-van-internationalisering)
+### Dank voor:
 
-Innovatie en internationalisering, omdat “innovatieve bedrijven
-zijn doorgaans vaker internationaal georiënteerd”: [Innovatie en internationalisering](https://www.cbs.nl/nl-nl/achtergrond/2018/13/innovatie-en-internationalisering)
+- De [Cheatsheet](https://github.com/DanielvandeVelde/functional-programming#cheatsheet) van Daniel.
+- Het [node-oba-api](https://github.com/rijkvanzanten/node-oba-api) pakketje van Rijk.
