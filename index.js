@@ -18,8 +18,7 @@ const client = new OBA({
 
 // Client returns a promise which resolves the APIs output in JSON
 
-var selectedFacet = [];
-//var selectedFacetId = ["language(dut)", "language(eng)", "language(fre)"];
+var allData = [];
 // 00 = nederlands , 01 = engels, 02 = frans, 03 = duits, 04 = spaans, 05 = ara/arabisch, 06 = turks
 var selectedRctx = [
   "AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1SiktYWRkls6ML0pNLi5ILSoACrIaGTAx3DvJtO8gIxAxfdnByqhxaBIjswcDA3t$UiIDA4OiflF$fol$TmZhaWaKPlCMvbQoh4E1L4cRAA==",
@@ -46,8 +45,6 @@ client
   )
   .then(response => JSON.parse(response).aquabrowser)
   .then(response => {
-    console.log(response);
-    // console.log(selectedRctx);
     selectedRctx.forEach(function(selectedRctx) {
       client
         .get("refine", {
@@ -57,46 +54,31 @@ client
         .then(response => JSON.parse(response).aquabrowser)
         .then(response => {
           var genreFacet = getGenreFacet(response);
-          //console.log(getGenreFacet(response));
-          //return genreFacet;
         });
     });
   })
 
   .catch(err => console.log(err)); // Something went wrong in the request to the API
-//!!!!! FUNCTIONS
 
 function getGenreFacet(data) {
   var languageId = data.meta["original-query"];
-  var facet = data.facets.facet;
-  //console.log(test);
-  var test = [languageId, { facet }];
-  console.log(test);
+  var facets = data.facets.facet;
 
-  facet.forEach(function(facet) {
-    var facetId = facet.id;
-    console.log(languageId);
-
+  facets.forEach(function(facets) {
+    var facetId = facets.id;
     if (facetId === "Genre") {
-      var selectedFacet = facet.value;
-      //console.log(selectedFacet);
-      console.log(languageId);
-      genreCount.push([
-        languageId,
-        {
-          counts: selectedFacet
-        }
-      ]);
+      var values = facets.value;
 
-      if (genreCount.length > 6) {
-        let data = JSON.stringify(genreCount);
-        //console.log(data);
-        fs.writeFile("data.json", data, err => {
-          if (err) throw err;
-          console.log("All data written to file");
-        });
-      }
+      allData.push({
+        languageId,
+        counts: values
+      });
+
+      var allDataJson = JSON.stringify(allData);
+      fs.writeFileSync("data.json", allDataJson, err => {
+        if (err) throw err;
+        console.log("All data written to file");
+      });
     }
-    //return selectedFacet;
   });
 }
