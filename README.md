@@ -39,23 +39,22 @@ Om van een taal alle boeken per genre op te halen schreef ik twee `.get` request
 
 Via `search` worden alle artikelen opgehaald die het `format:book` hebben, alle **boeken** dus.
 
-```
-client
-  .get(
-    // vraag alle boeken op
-    "search",
-    {
-      q: "format:book",
-      librarian: true,
-      refine: true
-    },
-    "title"
-  )
+```javascript
+client.get(
+  // vraag alle boeken op
+  "search",
+  {
+    q: "format:book",
+    librarian: true,
+    refine: true
+  },
+  "title"
+);
 ```
 
 Via `refine` wordt de facet informatie over alles vanuit **boeken** van een bepaalde taal opgehaald. Dit request geeft in o.a. het genre facet de aantallen per genre aan voor de verschillende talen.
 
-```
+```javascript
 selectedRctx.forEach(function(selectedRctx) {
   client
     .get("refine", {
@@ -69,30 +68,37 @@ selectedRctx.forEach(function(selectedRctx) {
 });
 ```
 
-Tijdens het ophalen van de data vond het lastig om in te schatten hoe ik de data het beste in kon delen. Hier heb ik dan ook veel tijd aan besteed voordat ik aan D3 begon. Terwijl toen ik in D3 begon, ik ontdekte dat ik mijn data liever nog weer anders had willen structureren.
+```
+stuk code over ophalen van data: getGenreFacet(response);
+```
 
 ### Facets
 
-Opzoeken met behulp van een link:
+De faetten werken als volgt:
+https://zoeken.oba.nl/api/v1/search/?q=boek&authorization=1e19898c87464e239192c8bfe422f280&refine=true
+
+- `https://zoeken.oba.nl/api/v1/` link naar de API
+- `search/` endpoint (zie endpoints)
+- `?q=boek` query, een _parameter_ die meegegeven kan worden aan het endpoint: _search_
+- `authorization=1e19898c87464e239192c8bfe422f280` “wachtwoord”, geeft toegang
+- `refine=true` parameter refine staat op true, refine maakt het mogelijk om facetten op te vragen per query (q), zie hierboven
+
+https://zoeken.oba.nl/api/v1/refine/?rctx=AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1Ss1LZ2Rkls6ML0pNLi5ILSoACrIaGTAx3Glh6prPCERMPWdZGTUu7GRk9mBgYM9PSmRgYFDUL8rPL9HPySwszUzRB4qxlxblMLDm5TACAA==&authorization=1e19898c87464e239192c8bfe422f280&count=100
+
+- `refine/` endpoint (zie endpoints)
+- `rctx=AWNkYO...CAA==` rctx, een _parameter_ die meegegeven kan worden aan het endpoint: _refine_. rctx volgens de documentatie van de API: “_An opaque token that represents previous API activity, it is the Request Context. This token should be included for improved performance and if search context/history is important._”
+- `authorization=1e19898c87464e239192c8bfe422f280` “wachtwoord”, geeft toegang
+- `count=100` parameter count staat op 100, en laat dus max. 100 resultaten zien
 
 `&` gelijk aan een spatie
 
-• https://zoeken.oba.nl/api/v1/search/?q=boek&authorization=1e19898c87464e239192c8bfe422f280&refine=true
+Tijdens het ophalen van de data vond het lastig om in te schatten hoe ik de data het beste in kon delen. Hier heb ik dan ook veel tijd aan besteed voordat ik aan D3 begon. Terwijl toen ik in D3 begon, ik ontdekte dat ik mijn data liever nog weer anders had willen structureren.
 
-`https://zoeken.oba.nl/api/v1/` link naar de API
-`search/` endpoint (zie endpoints)
-`?q=boek` query, een _parameter_ die meegegeven kan worden aan het endpoint: _search_
-`authorization=1e19898c87464e239192c8bfe422f280` “wachtwoord”, geeft toegang
-`refine=true` parameter refine staat op true, refine maakt het mogelijk om facetten op te vragen per query (q), zie hierboven
+### De datavisualisatie
 
-• https://zoeken.oba.nl/api/v1/refine/?rctx=AWNkYOZmYGcwLDJKNUmuSK3KKMzLKTbMSM82TspISco3YmZk4MxNzMxjZGaQzEnMSy9NTE$1Ss1LZ2Rkls6ML0pNLi5ILSoACrIaGTAx3Glh6prPCERMPWdZGTUu7GRk9mBgYM9PSmRgYFDUL8rPL9HPySwszUzRB4qxlxblMLDm5TACAA==&authorization=1e19898c87464e239192c8bfe422f280&count=100
+![schets][schets.png]
 
-`refine/` endpoint (zie endpoints)
-`rctx=AWNkYO...CAA==` rctx, een _parameter_ die meegegeven kan worden aan het endpoint: _refine_. rctx volgens de documentatie van de API: “_An opaque token that represents previous API activity, it is the Request Context. This token should be included for improved performance and if search context/history is important._”
-`authorization=1e19898c87464e239192c8bfe422f280` “wachtwoord”, geeft toegang
-`count=100` parameter count staat op 100, en laat dus max. 100 resultaten zien
-
-## Externe bronnen
+## Extra bronnen
 
 De volgende bronnen zou ik in de toekomst kunnen gebruiken:
 
