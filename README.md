@@ -96,7 +96,7 @@ Tijdens het ophalen van de data vond het lastig om in te schatten hoe ik de data
 
 ### De datavisualisatie
 
-![schets](schets.png)
+![schets](schetsDatavis.png)
 
 ## Extra bronnen
 
